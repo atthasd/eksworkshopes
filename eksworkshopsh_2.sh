@@ -11,6 +11,8 @@ kubectl completion bash >>  ~/.bash_completion
 echo 'export LBC_VERSION="v2.0.0"' >>  ~/.bash_profile
 .  ~/.bash_profile
 cd ~/environment
+export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
+export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
 echo "export ACCOUNT_ID=${ACCOUNT_ID}" | tee -a ~/.bash_profile
 echo "export AWS_REGION=${AWS_REGION}" | tee -a ~/.bash_profile
 aws configure set default.region ${AWS_REGION}
